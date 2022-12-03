@@ -2,8 +2,7 @@ enum class RockPaperScissors {
     ROCK, PAPER, SCISSORS,
 }
 
-fun String.getTotalScore(): Int = this
-    .parse()
+fun String.getTotalScore(parseMethod: (String) -> List<List<RockPaperScissors>>): Int = parseMethod(this)
     .let{
         var total = 0
         it.forEach { row ->
@@ -35,7 +34,7 @@ else if(
 ) 6
 else 3
 
-fun String.parse(): List<List<RockPaperScissors>> = this
+fun parseQ1(input: String): List<List<RockPaperScissors>> = input
     .split('\n')
     .map{
             row -> row.split(' ')
@@ -45,6 +44,42 @@ fun String.parse(): List<List<RockPaperScissors>> = this
         }
     }
 
+
+fun RockPaperScissors.win(): RockPaperScissors = when(this) {
+    RockPaperScissors.ROCK -> RockPaperScissors.PAPER
+    RockPaperScissors.PAPER -> RockPaperScissors.SCISSORS
+    RockPaperScissors.SCISSORS -> RockPaperScissors.ROCK
+}
+fun RockPaperScissors.draw(): RockPaperScissors = when(this) {
+    RockPaperScissors.ROCK -> RockPaperScissors.ROCK
+    RockPaperScissors.PAPER -> RockPaperScissors.PAPER
+    RockPaperScissors.SCISSORS -> RockPaperScissors.SCISSORS
+}
+
+fun RockPaperScissors.loose(): RockPaperScissors = when(this) {
+    RockPaperScissors.ROCK -> RockPaperScissors.SCISSORS
+    RockPaperScissors.PAPER -> RockPaperScissors.ROCK
+    RockPaperScissors.SCISSORS -> RockPaperScissors.PAPER
+}
+
+
+fun parseQ2(input: String): List<List<RockPaperScissors>> = input
+    .split('\n')
+    .map{
+            row -> row.split(' ')
+        .let{
+            val opponentPick = it.first().getRockPaperScissors()
+            listOf(
+                opponentPick,
+                when(it[1]) {
+                    "X" -> opponentPick.loose()
+                    "Y" -> opponentPick.draw()
+                    "Z" -> opponentPick.win()
+                    else -> throw Exception("Unkown WinDrawLoose")
+                },
+            )
+        }
+    }
 
 fun String.getRockPaperScissors(): RockPaperScissors = when(this) {
     "A",

@@ -11,7 +11,16 @@ class RockPaperScissorsTest {
                 B X
                 C Z
             """.trimIndent()
-                .getTotalScore()
+                .getTotalScore(::parseQ1)
+        )
+        assertEquals(
+            12,
+            """
+                A Y
+                B X
+                C Z
+            """.trimIndent()
+                .getTotalScore(::parseQ2)
         )
     }
 
@@ -23,12 +32,23 @@ class RockPaperScissorsTest {
                 listOf(RockPaperScissors.PAPER, RockPaperScissors.ROCK),
                 listOf(RockPaperScissors.SCISSORS,RockPaperScissors.SCISSORS),
             ),
-            """
+            parseQ1("""
                 A Y
                 B X
                 C Z
-            """.trimIndent()
-                .parse()
+            """.trimIndent())
+        )
+        assertEquals(
+            listOf(
+                listOf(RockPaperScissors.ROCK, RockPaperScissors.ROCK),
+                listOf(RockPaperScissors.PAPER, RockPaperScissors.ROCK),
+                listOf(RockPaperScissors.SCISSORS,RockPaperScissors.ROCK),
+            ),
+            parseQ2("""
+                A Y
+                B X
+                C Z
+            """.trimIndent())
         )
         
         

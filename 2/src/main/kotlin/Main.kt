@@ -2506,5 +2506,6 @@ C Y
     // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
     println("Program arguments: ${args.joinToString()}")
 
-    println("Score = " + input.getTotalScore())
+    println("Score Q1 = " + input.getTotalScore(::parseQ1))
+    println("Score Q2 = " + input.getTotalScore(::parseQ2))
 }
